@@ -7,7 +7,7 @@ function ProductCard({product, onadd}) {
             <div className="buy">
                 <span>{product.price}ج</span>
                 <button className="buy-btn" onClick={() => onadd(product)}>
-                    شراء 🛒
+                   🛒 شراء 
                 </button>
             </div>
         </div>

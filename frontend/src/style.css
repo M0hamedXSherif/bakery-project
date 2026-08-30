@@ -53,8 +53,12 @@ body {
   color: var(--text-main);
 }
 
+.navbar-username{
+  font-size: 20px;
+}
+
 .navbar-logo {
-  font-size: 22px;
+  font-size: 24px;
 }
 
 .theme-btn{
@@ -63,6 +67,7 @@ body {
   color: var(--text-muted);
   padding: 5px 10px;
   border-radius: 30px;
+  font-size: 20px;
 }
 /* END NAVBAR STYLING */
 
@@ -122,6 +127,7 @@ body {
 .card h2{
   color: var(--text-main);
   font-weight: 600;
+  font-size: 20px;
   margin-bottom: 10px;
 }
 
@@ -135,7 +141,8 @@ body {
 .card .buy .buy-btn{
   background-color: var(--accent);
   color: var(--bg-card);
-  padding: 2px 4px;
+  padding: 2px 3px;
+  font-size: 13px;
 }
 
 .card span{
