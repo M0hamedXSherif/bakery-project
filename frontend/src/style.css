@@ -68,6 +68,7 @@ body {
 
 
 /* Skeleton Loading EFFECT */
+.skeleton-card{padding: 15px;}
 .skeleton-img, .skeleton-line {
   background: linear-gradient(90deg, var(--bg-page) 25%, var(--bg-card) 50%, var(--bg-page) 75%);
   background-size: 200% 100%;
