@@ -8,8 +8,10 @@ generator client {
 }
 
 model Product {
-  id    Int     @id @default(autoincrement())
-  name  String
-  price Float
-  stock Int     @default(0)
+  id       Int      @id @default(autoincrement())
+  name     String
+  price    Float
+  stock    Int
+  imageUrl String?
+  alt      String?
 }
