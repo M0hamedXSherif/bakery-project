@@ -169,7 +169,7 @@ body {
   animation: fadeIn 0.2s ease;
 }
 
-/* البانل نفسه، اللي فيه محتوى السلة */
+/* PANEL STYLES*/
 .cart-panel {
   background-color: var(--bg-card);
   border-radius: 16px;
@@ -181,13 +181,13 @@ body {
   animation: scaleIn 0.2s ease;
 }
 
-/* تأثير الظهور التدريجي للضبابية */
+/* FADE EFFECT*/
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-/* تأثير الظهور مع تكبير بسيط للبانل، يديله إحساس السلاسة */
+/* OPEN PANEL SMOOTHLY */
 @keyframes scaleIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
