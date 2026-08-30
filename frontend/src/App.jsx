@@ -40,7 +40,6 @@ function App() {
       <button className="theme-btn" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
         ☀️
       </button>
-      <p>Total: ${total}</p>
       <section className="product-grid">
         {products.map(product => {
           return(
@@ -56,14 +55,14 @@ function App() {
 
       {cart.length > 0 && (
         <button className="floating-cart-btn" onClick={() => setIsCartOpen(true)}>
-          🛒 {cart.length}
+          <span>🛒</span> <span>{cart.length}</span> 
         </button>
       )}
       
       {isCartOpen && (
         <div className="cart-backdrop" onClick={() => setIsCartOpen(false)}>
           <div className="cart-panel" onClick={(e) => e.stopPropagation()}>
-            <Cart cart={cart} onRemove={removeFromCart} onCheckout={checkout} />
+            <Cart cart={cart} onRemove={removeFromCart} onCheckout={checkout} total={total} />
           </div>
         </div>
       )}

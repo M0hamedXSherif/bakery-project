@@ -57,6 +57,12 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 10px;
+}
+
+.card .buy .buy-btn{
+  background-color: var(--accent);
+  color: var(--bg-card);
 }
 
 .card span{
@@ -73,9 +79,7 @@ body {
 
 /* CART STYLES */
 .cart {
-  width: 300px;
-  margin-top: 10px;
-  background-color: var(--bg-card);
+  background-color: var(--bg-page);
   transition: background-color 0.2s;
   border-radius: 0 0 16px 16px;
   border-top: 3px solid var(--accent);
@@ -93,14 +97,22 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background-color: var(--bg-page);
+  background-color: var(--bg-card);
   padding: 3px 5px;
   border-radius: 7px;
 }
 
-.cart span{
-  color: var(--text-main);
-  font-weight: 500;
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 5px;
+  margin-top: 8px;
+  border-top: 2px dashed var(--text-muted);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
 }
 
 .cart .rmv-btn{
@@ -120,6 +132,65 @@ body {
   font-weight: 500;
   font-size: 14px;
   margin-top: 5px;
+}
+
+/* FLOATING CART BTN */
+.floating-cart-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: none;
+  border-radius: 12px;
+  width: 46px;
+  height: 46px;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CART BACKDROP FILTER */
+.cart-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+/* البانل نفسه، اللي فيه محتوى السلة */
+.cart-panel {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  padding: 16px;
+  max-width: 90%;
+  width: 340px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: scaleIn 0.2s ease;
+}
+
+/* تأثير الظهور التدريجي للضبابية */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* تأثير الظهور مع تكبير بسيط للبانل، يديله إحساس السلاسة */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 /* END CART */
 
