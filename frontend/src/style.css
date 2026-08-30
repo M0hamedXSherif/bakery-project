@@ -22,7 +22,33 @@ body {
   transition: background-color 0.2s, color 0.2s;
 }
 
-/* PRODUCT CARD COMPONENT STYLES */
+/* NAVBAR STYLING */
+.navbar {
+  position: sticky;
+  top: 1vh;
+  z-index: 150;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: var(--bg-card);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  margin: 10px 0;
+  border-radius: 16px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.navbar-logo {
+  font-size: 22px;
+}
 
 .theme-btn{
   background-color: var(--bg-card);
@@ -31,7 +57,11 @@ body {
   padding: 5px 10px;
   border-radius: 30px;
 }
+/* END NAVBAR STYLING */
 
+
+
+/* PRODUCT CARD COMPONENT STYLES */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -138,7 +168,9 @@ body {
 .floating-cart-btn {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 50%;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 100;
   background-color: var(--bg-card);
   color: var(--text-main);

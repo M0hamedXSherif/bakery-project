@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductCard from './ProductCard.jsx'
 import Cart from './Cart.jsx'
+import Navbar from './Navbar.jsx'
 
 
 
@@ -37,9 +38,11 @@ function App() {
 
   return(
     <>
-      <button className="theme-btn" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-        ☀️
-      </button>
+      <Navbar 
+        theme={theme} 
+        onToggleTheme={() => setTheme(theme === "light" ? "dark" : "light")} 
+        username="أحمد" 
+      />
       <section className="product-grid">
         {products.map(product => {
           return(
