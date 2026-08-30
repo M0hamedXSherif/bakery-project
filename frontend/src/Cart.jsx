@@ -11,7 +11,7 @@ function Cart({ cart, onRemove, onCheckout, total }) {
         <span>الإجمالي: </span>
         <span>{total}ج</span>
       </div>
-      <button className="csh-btn" onClick={() => onCheckout()}>Confirm cash received</button>
+      <button className="csh-btn" onClick={() => onCheckout()}>تأكيد استلام النقود</button>
     </div>
   )
 }

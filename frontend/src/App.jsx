@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ProductCard from './ProductCard.jsx'
 import Cart from './Cart.jsx'
 import Navbar from './Navbar.jsx'
+import SkeletonCard from './SkeletonCard.jsx'
 
 
 
@@ -10,11 +11,15 @@ function App() {
   const [cart, setCart] = useState([])
   const [theme, setTheme] = useState("light")
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect( () => {
     fetch("https://efficient-warmth-production-3ad5.up.railway.app/products")
     .then(response => response.json())
-    .then(data => setProducts(data))
+    .then(data => {
+      setProducts(data)
+      setIsLoading(false)
+    })
   }, [])
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme)
@@ -44,16 +49,11 @@ function App() {
         username="أحمد" 
       />
       <section className="product-grid">
-        {products.map(product => {
-          return(
-            <ProductCard
-              key={product.id}
-              product={product}
-              onadd={addToCart}
-            />
-          )
-        })
-      }
+        {isLoading
+        ? Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
+        : products.map(product => (
+        <ProductCard key={product.id} product={product} onadd={addToCart} />))
+        }
       </section>
 
       {cart.length > 0 && (

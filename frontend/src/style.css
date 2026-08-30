@@ -1,3 +1,9 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 :root[data-theme="light"] {
   --bg-page: #FBF0D9;
   --bg-card: #FFFFFF;
@@ -20,6 +26,7 @@ body {
   background-color: var(--bg-page);
   color: var(--text-main);
   transition: background-color 0.2s, color 0.2s;
+  padding: 7px;
 }
 
 /* NAVBAR STYLING */
@@ -33,7 +40,7 @@ body {
   padding: 10px 16px;
   background-color: var(--bg-card);
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  margin: 10px 0;
+  margin: 1px 0 15px;
   border-radius: 16px;
 }
 
@@ -60,6 +67,38 @@ body {
 /* END NAVBAR STYLING */
 
 
+/* Skeleton Loading EFFECT */
+.skeleton-img, .skeleton-line {
+  background: linear-gradient(90deg, var(--bg-page) 25%, var(--bg-card) 50%, var(--bg-page) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+.skeleton-img {
+  width: 100%;
+  height: 100px;
+}
+
+.skeleton-line {
+  height: 14px;
+  margin-top: 8px;
+}
+
+.skeleton-title {
+  width: 70%;
+}
+
+.skeleton-price {
+  width: 40%;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+/* END Skeleton Loading EFFECT */
+
 
 /* PRODUCT CARD COMPONENT STYLES */
 .product-grid {
@@ -76,6 +115,7 @@ body {
   align-items: center;
   border-radius: 17px;
   width: 100%;
+  padding: 10px;
 }
 
 .card h2{
