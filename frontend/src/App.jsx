@@ -46,7 +46,7 @@ function App() {
       <Navbar 
         theme={theme} 
         onToggleTheme={() => setTheme(theme === "light" ? "dark" : "light")} 
-        username="أحمد" 
+        username="إبراهيم" 
       />
       <section className="product-grid">
         {isLoading

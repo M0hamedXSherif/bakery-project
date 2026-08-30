@@ -3,13 +3,13 @@ function Cart({ cart, onRemove, onCheckout, total }) {
     <div className="cart">
       {cart.map((item, index) => (
       <div className="cart-item" key={index}>
+        <button className="rmv-btn" onClick={() => onRemove(index)}>حذف</button>
         <span>{item.name} - {item.price}ج</span>
-        <button className="rmv-btn" onClick={() => onRemove(index)}>Remove</button>
       </div>
     ))} 
       <div className="cart-total">
-        <span>الإجمالي: </span>
         <span>{total}ج</span>
+        <span>:الإجمالي </span>
       </div>
       <button className="csh-btn" onClick={() => onCheckout()}>تأكيد استلام النقود</button>
     </div>
