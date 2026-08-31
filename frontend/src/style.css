@@ -125,7 +125,10 @@ body {
 }
 
 .card img{
-  width: 150px;
+  width: 80%;
+  height: 100px;
+  border-radius: 12px;
+  margin-bottom: 5px;
 }
 
 .card h2{
