@@ -3,6 +3,7 @@ import ProductCard from './ProductCard.jsx'
 import Cart from './Cart.jsx'
 import Navbar from './Navbar.jsx'
 import SkeletonCard from './SkeletonCard.jsx'
+import Ingredients from './Ingredients.jsx'
 
 
 
@@ -55,6 +56,8 @@ function App() {
         <ProductCard key={product.id} product={product} onadd={addToCart} />))
         }
       </section>
+
+      <Ingredients />
 
       {cart.length > 0 && (
         <button className="floating-cart-btn" onClick={() => setIsCartOpen(true)}>
