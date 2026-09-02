@@ -3,6 +3,32 @@ const app = express();
 const cors = require('cors');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+function verifyOwner(req, res, next) {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ error: "لازم تسجل دخول الأول!" });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (decoded.role !== "owner") {
+            return res.status(403).json({ error: "مش مسموح لك تعمل الحاجة دي!" });
+        }
+
+        req.user = decoded;
+        next();
+
+    } catch (error) {
+        return res.status(401).json({ error: "الجلسة انتهت أو التوكن مش صحيح، سجل دخول تاني!" });
+    }
+}
 
 app.use(express.json());
 app.use(cors())
@@ -43,9 +69,7 @@ app.get('/products/:id', async (req, res) => {
 app.put('/products/:id', async (req, res) => {
     try{
         const dataId = Number(req.params.id);
-        console.log("request ID : ", dataId);
         const newData = req.body;
-        console.log("Data in body: ", newData);
         const updatedData = await prisma.product.update({
             where: {id: dataId}, 
             data: newData
@@ -114,7 +138,7 @@ app.get('/ingredients/:id', async (req, res) => {
     }
 });
 
-app.post('/ingredients', async (req, res) => {
+app.post('/ingredients', verifyOwner, async (req, res) => {
     try{
         const data = req.body;
         const newIngredient = await prisma.ingredient.create({data: data});
@@ -125,7 +149,7 @@ app.post('/ingredients', async (req, res) => {
     }
 });
 
-app.put('/ingredients/:id', async (req, res) => {
+app.put('/ingredients/:id', verifyOwner, async (req, res) => {
     try{
         const dataId = Number(req.params.id);
         const newData = req.body;
@@ -140,7 +164,7 @@ app.put('/ingredients/:id', async (req, res) => {
     }
 });
 
-app.delete('/ingredients/:id', async (req, res) => {
+app.delete('/ingredients/:id', verifyOwner, async (req, res) => {
     try {
         const data = Number(req.params.id);
         const deletedIngredient = await prisma.ingredient.delete({
@@ -155,6 +179,76 @@ app.delete('/ingredients/:id', async (req, res) => {
         res.status(500).json({ errorMsg: "حصلت مشكلة وإحنا بنمسح المادة دي!", error: error.message });
     }
 });
+
+/* ================= REGISTER ================= */
+
+app.post('/register', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = await prisma.user.create({
+            data: {
+                email: email,
+                password: hashedPassword,
+                role: "staff",
+                isApproved: false
+            }
+        });
+
+        res.status(201).json({ 
+            successMsg: "تم التسجيل بنجاح! محتاج موافقة صاحب المخبز الأول قبل ما تقدر تدخل.", 
+            id: newUser.id, 
+            email: newUser.email
+        });
+    } catch (error) {
+        console.log("Error details: ", error);
+        res.status(500).json({ error: "حصلت مشكلة وإحنا بنسجلك، جرب تاني!", details: error.message });
+    }
+});
+
+/* ================= LOGIN ================= */
+
+app.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await prisma.user.findUnique({ where: { email: email } });
+
+        if (!user) {
+            return res.status(404).json({ error: "كلمة السر او الايميل غلط!" });
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordCorrect) {
+            return res.status(401).json({ error: "الايميل او كلمة السر غلط!" });
+        }
+
+        if (!user.isApproved) {
+            return res.status(403).json({ error: "حسابك لسه مستني موافقة صاحب المخبز!" });
+        }
+
+        const token = jwt.sign(
+            { id: user.id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.status(200).json({ 
+            successMsg: "تم تسجيل الدخول بنجاح!", 
+            token: token, 
+            role: user.role,
+            email: user.email
+        });
+
+    } catch (error) {
+        console.log("Error details: ", error);
+        res.status(500).json({ error: "حصلت مشكلة وإحنا بنسجل دخولك!" });
+    }
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running powerfully on Port ${PORT}`);
