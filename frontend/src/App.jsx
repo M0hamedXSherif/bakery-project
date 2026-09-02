@@ -4,6 +4,7 @@ import Cart from './Cart.jsx'
 import Navbar from './Navbar.jsx'
 import SkeletonCard from './SkeletonCard.jsx'
 import Ingredients from './Ingredients.jsx'
+import Login from './Login.jsx'
 
 
 
@@ -13,6 +14,13 @@ function App() {
   const [theme, setTheme] = useState("light")
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [token, setToken] = useState(localStorage.getItem("token"))
+  const [role, setRole] = useState(localStorage.getItem("role"))
+
+  function handleLoginSuccess(newRole, newEmail) {
+  setToken(localStorage.getItem("token"))
+  setRole(newRole)
+}
 
   useEffect( () => {
     fetch("https://efficient-warmth-production-3ad5.up.railway.app/products")
@@ -44,11 +52,15 @@ function App() {
 
   return(
     <>
+      {!token && <Login onLoginSuccess={handleLoginSuccess} />}
+      {role === "owner" && <Ingredients token={token} />}
+      
       <Navbar 
         theme={theme} 
         onToggleTheme={() => setTheme(theme === "light" ? "dark" : "light")} 
         username="إبراهيم" 
       />
+
       <section className="product-grid">
         {isLoading
         ? Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
@@ -57,7 +69,6 @@ function App() {
         }
       </section>
 
-      <Ingredients />
 
       {cart.length > 0 && (
         <button className="floating-cart-btn" onClick={() => setIsCartOpen(true)}>

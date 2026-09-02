@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 const API_URL = "https://efficient-warmth-production-3ad5.up.railway.app/ingredients"
 
-function Ingredients() {
+function Ingredients({ token }) {
   const [ingredients, setIngredients] = useState([])
   const [name, setName] = useState("")
   const [unit, setUnit] = useState("جرام")
@@ -19,23 +19,29 @@ function Ingredients() {
   }, [])
 
   function addIngredient() {
-    fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, unit, stock: Number(stock) })
+  fetch(API_URL, {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({ name, unit, stock: Number(stock) })
+  })
+    .then(res => res.json())
+    .then(() => {
+      setName("")
+      setStock("")
+      loadIngredients()
     })
-      .then(res => res.json())
-      .then(() => {
-        setName("")
-        setStock("")
-        loadIngredients()
-      })
-  }
+}
 
   function deleteIngredient(id) {
-    fetch(`${API_URL}/${id}`, { method: "DELETE" })
-      .then(() => loadIngredients())
-  }
+  fetch(`${API_URL}/${id}`, { 
+    method: "DELETE",
+    headers: { "Authorization": `Bearer ${token}` }
+  })
+    .then(() => loadIngredients())
+}
 
   return (
     <div className="ingredients-page">
